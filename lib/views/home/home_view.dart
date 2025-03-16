@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                 ),
                 child: Row(
                   children: const [
-                    Icon(Icons.search, color: Colors.grey),
+                    Icon(Icons.search, color: Colors.purple),
                     SizedBox(width: 10),
                     Expanded(
                       child: TextField(
