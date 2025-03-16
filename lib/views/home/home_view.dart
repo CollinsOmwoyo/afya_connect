@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
                     icon: Icons.local_hospital,
                     label: 'Clinics',
                     color: Colors.blueAccent,
-                    onTap: () {}, // Add navigation logic
+                    onTap: () {},
                   ),
                   _FeatureCard(
                     icon: Icons.local_pharmacy,
@@ -108,27 +108,16 @@ class HomeView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Suggested Cards
+              // Suggested Cards (Empty, to be populated from CSV later)
               SizedBox(
-                height: size.height * 0.25,
+                height: size.height * 0.22, // Reduced height for better fit
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    _SuggestionCard(
-                      title: 'Green Valley Clinic',
-                      subtitle: '24/7 Open',
-                      icon: Icons.local_hospital,
-                    ),
-                    _SuggestionCard(
-                      title: 'HealthPlus Pharmacy',
-                      subtitle: 'Open until 10 PM',
-                      icon: Icons.local_pharmacy,
-                    ),
-                    _SuggestionCard(
-                      title: 'City Care Clinic',
-                      subtitle: 'Specialist Available',
-                      icon: Icons.local_hospital,
-                    ),
+                  children: [
+                    // Placeholder card widget for dynamic data
+                    _EmptySuggestionCard(),
+                    _EmptySuggestionCard(),
+                    _EmptySuggestionCard(),
                   ],
                 ),
               ),
@@ -173,17 +162,9 @@ class _FeatureCard extends StatelessWidget {
   }
 }
 
-// Suggested Clinic/Pharmacy Card Widget
-class _SuggestionCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-
-  const _SuggestionCard({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-  });
+// Empty Placeholder for Suggestion Cards (For Dynamic Data Injection Later)
+class _EmptySuggestionCard extends StatelessWidget {
+  const _EmptySuggestionCard();
 
   @override
   Widget build(BuildContext context) {
@@ -202,27 +183,13 @@ class _SuggestionCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: Colors.blue.shade50,
-            child: Icon(icon, color: Colors.blue, size: 28),
-          ),
-          const SizedBox(height: 12),
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text(subtitle, style: const TextStyle(color: Colors.grey)),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Icon(Icons.arrow_forward_ios, size: 16, color: Colors.blue),
-            ],
-          )
-        ],
+      child: Center(
+        child: Text(
+          'No Data Yet',
+          style: TextStyle(color: Colors.grey[500]),
+        ),
       ),
     );
   }
 }
+
