@@ -22,22 +22,22 @@ class HomeView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      Text('Hello,', style: TextStyle(fontSize: 18, color: Colors.black54)),
-                      Text('Welcome to Afya Connect', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                      Text('Hello,', style: TextStyle(fontSize: 16, color: Colors.black54)),
+                      Text('Welcome to Afya Connect', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
                   CircleAvatar(
-                    radius: 24,
+                    radius: 22,
                     backgroundColor: Colors.blue.shade100,
-                    child: const Icon(Icons.person, color: Colors.blue, size: 28),
+                    child: const Icon(Icons.person, color: Colors.blue, size: 26),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
               // Search Bar
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
 
               // Quick Access Features
               Row(
@@ -73,13 +73,13 @@ class HomeView extends StatelessWidget {
                   _FeatureCard(
                     icon: Icons.local_hospital,
                     label: 'Clinics',
-                    color: Colors.blueAccent,
+                    color: Colors.teal,
                     onTap: () {},
                   ),
                   _FeatureCard(
                     icon: Icons.local_pharmacy,
                     label: 'Pharmacies',
-                    color: Colors.green,
+                    color: Colors.deepPurple,
                     onTap: () {},
                   ),
                   _FeatureCard(
@@ -96,31 +96,53 @@ class HomeView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
 
-              // Suggested Clinics/Pharmacies Section
+              // Suggested Clinics
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text('Suggested for You', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text('See All', style: TextStyle(color: Colors.blue)),
+                  Text('Suggested Clinics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text('See All', style: TextStyle(color: Colors.teal)),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
-              // Suggested Cards (Empty, to be populated from CSV later)
               SizedBox(
-                height: size.height * 0.22, // Reduced height for better fit
+                height: size.height * 0.20,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    // Placeholder card widget for dynamic data
-                    _EmptySuggestionCard(),
-                    _EmptySuggestionCard(),
-                    _EmptySuggestionCard(),
+                  children: const [
+                    _SuggestionCard(color: Colors.teal),
+                    _SuggestionCard(color: Colors.teal),
+                    _SuggestionCard(color: Colors.teal),
                   ],
                 ),
               ),
+              const SizedBox(height: 24),
+
+              // Suggested Pharmacies
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Suggested Pharmacies', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text('See All', style: TextStyle(color: Colors.deepPurple)),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              SizedBox(
+                height: size.height * 0.20,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    _SuggestionCard(color: Colors.deepPurple),
+                    _SuggestionCard(color: Colors.deepPurple),
+                    _SuggestionCard(color: Colors.deepPurple),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -129,7 +151,7 @@ class HomeView extends StatelessWidget {
   }
 }
 
-// Quick Feature Card Widget
+// Reusable Quick Feature Card
 class _FeatureCard extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -150,35 +172,37 @@ class _FeatureCard extends StatelessWidget {
       child: Column(
         children: [
           CircleAvatar(
-            radius: 30,
-            backgroundColor: color.withOpacity(0.2),
-            child: Icon(icon, color: color, size: 28),
+            radius: 28,
+            backgroundColor: color.withOpacity(0.15),
+            child: Icon(icon, color: color, size: 26),
           ),
-          const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+          const SizedBox(height: 6),
+          Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
         ],
       ),
     );
   }
 }
 
-// Empty Placeholder for Suggestion Cards (For Dynamic Data Injection Later)
-class _EmptySuggestionCard extends StatelessWidget {
-  const _EmptySuggestionCard();
+// Empty Placeholder for Suggestion Cards (Dynamic Data Ready)
+class _SuggestionCard extends StatelessWidget {
+  final Color color;
+
+  const _SuggestionCard({required this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      width: 160,
       margin: const EdgeInsets.only(right: 16),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade300,
-            blurRadius: 6,
+            blurRadius: 5,
             offset: const Offset(0, 3),
           ),
         ],
@@ -186,7 +210,8 @@ class _EmptySuggestionCard extends StatelessWidget {
       child: Center(
         child: Text(
           'No Data Yet',
-          style: TextStyle(color: Colors.grey[500]),
+          style: TextStyle(color: color.withOpacity(0.8), fontSize: 14, fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
         ),
       ),
     );
