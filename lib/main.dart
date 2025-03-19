@@ -1,8 +1,19 @@
+import 'package:afya_connect/providers/clinic_provider.dart';
+import 'package:afya_connect/providers/pharmacy_provider.dart';
 import 'package:afya_connect/views/home/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ClinicProvider()),
+        ChangeNotifierProvider(create: (context) => PharmacyProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
