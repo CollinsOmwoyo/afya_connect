@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '/providers/clinic_provider.dart';
+import '/providers/pharmacy_provider.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -6,7 +10,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
@@ -22,8 +25,10 @@ class HomeView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      Text('Hello Collins Omwoyo,', style: TextStyle(fontSize: 16, color: Colors.black54)),
-                      Text('Welcome to Afya Connect', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text('Hello Collins Omwoyo,',
+                          style: TextStyle(fontSize: 16, color: Colors.black54)),
+                      Text('Welcome to Afya Connect',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
                   CircleAvatar(
@@ -74,72 +79,113 @@ class HomeView extends StatelessWidget {
                     icon: Icons.local_hospital,
                     label: 'Clinics',
                     color: Colors.teal,
-                    onTap: () {},
+                    onTap: () {
+                      // Navigate to clinics list
+                    },
                   ),
                   _FeatureCard(
                     icon: Icons.local_pharmacy,
                     label: 'Pharmacies',
                     color: Colors.deepPurple,
-                    onTap: () {},
+                    onTap: () {
+                      // Navigate to pharmacies list
+                    },
                   ),
                   _FeatureCard(
                     icon: Icons.calendar_today,
                     label: 'Appointments',
                     color: Colors.orange,
-                    onTap: () {},
+                    onTap: () {
+                      // Navigate to appointments
+                    },
                   ),
                   _FeatureCard(
                     icon: Icons.chat,
                     label: 'Chatbot',
                     color: Colors.purple,
-                    onTap: () {},
+                    onTap: () {
+                      // Navigate to chatbot
+                    },
                   ),
                 ],
               ),
               const SizedBox(height: 24),
 
-              // Suggested Clinics
+              // Suggested Clinics Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Suggested Clinics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text('See All', style: TextStyle(color: Colors.teal)),
+                children: [
+                  const Text('Suggested Clinics',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  TextButton(
+                    onPressed: () {
+                      // Navigate to clinics list
+                    },
+                    child: const Text('See All', style: TextStyle(color: Colors.teal)),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
-
               SizedBox(
                 height: size.height * 0.20,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    _SuggestionCard(color: Colors.teal),
-                    _SuggestionCard(color: Colors.teal),
-                    _SuggestionCard(color: Colors.teal),
-                  ],
+                child: Consumer<ClinicProvider>(
+                  builder: (context, clinicProvider, child) {
+                    if (clinicProvider.clinics.isEmpty) {
+                      return const Center(child: Text('No Clinics Available'));
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: clinicProvider.clinics.length,
+                      itemBuilder: (context, index) {
+                        final clinic = clinicProvider.clinics[index];
+                        return _DynamicSuggestionCard(
+                          color: Colors.teal,
+                          title: clinic.name,
+                          subtitle: clinic.county,
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 24),
 
-              // Suggested Pharmacies
+              // Suggested Pharmacies Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Suggested Pharmacies', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text('See All', style: TextStyle(color: Colors.deepPurple)),
+                children: [
+                  const Text('Suggested Pharmacies',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  TextButton(
+                    onPressed: () {
+                      // Navigate to pharmacies list
+                    },
+                    child:
+                        const Text('See All', style: TextStyle(color: Colors.deepPurple)),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
-
               SizedBox(
                 height: size.height * 0.20,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    _SuggestionCard(color: Colors.deepPurple),
-                    _SuggestionCard(color: Colors.deepPurple),
-                    _SuggestionCard(color: Colors.deepPurple),
-                  ],
+                child: Consumer<PharmacyProvider>(
+                  builder: (context, pharmacyProvider, child) {
+                    if (pharmacyProvider.pharmacies.isEmpty) {
+                      return const Center(child: Text('No Pharmacies Available'));
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: pharmacyProvider.pharmacies.length,
+                      itemBuilder: (context, index) {
+                        final pharmacy = pharmacyProvider.pharmacies[index];
+                        return _DynamicSuggestionCard(
+                          color: Colors.deepPurple,
+                          title: pharmacy.name,
+                          subtitle: pharmacy.county,
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 16),
@@ -177,23 +223,30 @@ class _FeatureCard extends StatelessWidget {
             child: Icon(icon, color: color, size: 26),
           ),
           const SizedBox(height: 6),
-          Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+          Text(label,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
         ],
       ),
     );
   }
 }
 
-// Empty Placeholder for Suggestion Cards (Dynamic Data Ready)
-class _SuggestionCard extends StatelessWidget {
+// Card widget for displaying dynamic suggestions from CSV data
+class _DynamicSuggestionCard extends StatelessWidget {
   final Color color;
+  final String title;
+  final String subtitle;
 
-  const _SuggestionCard({required this.color});
+  const _DynamicSuggestionCard({
+    required this.color,
+    required this.title,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
+      width: 180,
       margin: const EdgeInsets.only(right: 16),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -207,14 +260,19 @@ class _SuggestionCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
-        child: Text(
-          'No Data Yet',
-          style: TextStyle(color: color.withOpacity(0.8), fontSize: 14, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.center,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              style: TextStyle(
+                  color: color, fontWeight: FontWeight.bold, fontSize: 16)),
+          const SizedBox(height: 8),
+          Text(subtitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 14, color: Colors.black87)),
+        ],
       ),
     );
   }
 }
-
