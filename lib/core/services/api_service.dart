@@ -5,21 +5,25 @@ import '/models/clinic.dart';
 import '/models/pharmacy.dart';
 
 class CsvService {
-  // Load clinics
   Future<List<Clinic>> loadClinics() async {
-    final csvString = await rootBundle.loadString('assets/data/clinics.csv');
-    final rows = const CsvToListConverter().convert(csvString, eol: "\n");
-
-    // Skip header row, parse each row into a Clinic
-    return rows.skip(1).map((row) => Clinic.fromCsv(row)).toList();
+    return _loadCsv<Clinic>('assets/data/clinics.csv', (row) => Clinic.fromCsv(row));
   }
 
-  // Load pharmacies
   Future<List<Pharmacy>> loadPharmacies() async {
-    final csvString = await rootBundle.loadString('assets/data/pharmacies.csv');
-    final rows = const CsvToListConverter().convert(csvString, eol: "\n");
+    return _loadCsv<Pharmacy>('assets/data/pharmacies.csv', (row) => Pharmacy.fromCsv(row));
+  }
 
-    // Skip header row, parse each row into a Pharmacy
-    return rows.skip(1).map((row) => Pharmacy.fromCsv(row)).toList();
+  Future<List<T>> _loadCsv<T>(String path, T Function(List<dynamic>) fromCsv) async {
+    try {
+      final csvString = await rootBundle.loadString(path);
+      final rows = const CsvToListConverter().convert(csvString, eol: "\n");
+
+      if (rows.isEmpty) return [];
+
+      return rows.skip(1).map((row) => fromCsv(row)).toList();
+    } catch (e) {
+      print("Error loading CSV at $path: $e");
+      return [];
+    }
   }
 }
