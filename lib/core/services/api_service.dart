@@ -1,7 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import '../models/clinic.dart';
+import '/models/clinic.dart';
 
 class CsvService {
   Future<List<Clinic>> loadClinics() async {
