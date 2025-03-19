@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/models/pharmacy.dart';
-import '/core/services/api_service.dart';
+import '../core/services/csv_service.dart';
 
 class PharmacyProvider with ChangeNotifier {
   final CsvService _csvService = CsvService();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/core/services/api_service.dart';
+import '../core/services/csv_service.dart';
 import '/models/clinic.dart';
 
 class ClinicProvider with ChangeNotifier {
