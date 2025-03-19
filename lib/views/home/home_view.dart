@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      Text('Hello,', style: TextStyle(fontSize: 16, color: Colors.black54)),
+                      Text('Hello Collins Omwoyo,', style: TextStyle(fontSize: 16, color: Colors.black54)),
                       Text('Welcome to Afya Connect', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
