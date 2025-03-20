@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '/providers/clinic_provider.dart';
 import '/providers/pharmacy_provider.dart';
+import '/views/appointments/appointments_screen.dart';
 import '/views/clinics/clinics_list.dart';
 import '/views/pharmacies/pharmacies_list.dart';
 
@@ -107,6 +108,10 @@ class HomeView extends StatelessWidget {
                     color: Colors.orange,
                     onTap: () {
                       // Navigate to appointments
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AppointmentsScreen()),
+                      );
                     },
                   ),
                   _FeatureCard(
