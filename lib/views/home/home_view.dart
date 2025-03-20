@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '/providers/clinic_provider.dart';
 import '/providers/pharmacy_provider.dart';
+import '/views/clinics/clinics_list.dart';
+import '/views/pharmacies/pharmacies_list.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -81,6 +83,10 @@ class HomeView extends StatelessWidget {
                     color: Colors.teal,
                     onTap: () {
                       // Navigate to clinics list
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ClinicsListScreen()),
+                      );
                     },
                   ),
                   _FeatureCard(
@@ -89,6 +95,10 @@ class HomeView extends StatelessWidget {
                     color: Colors.deepPurple,
                     onTap: () {
                       // Navigate to pharmacies list
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PharmaciesListScreen()),
+                      );
                     },
                   ),
                   _FeatureCard(
