@@ -1,16 +1,41 @@
-# afya_connect
+# **Afya Connect** 🏥💊  
 
-A new Flutter project.
+_A comprehensive healthcare app built with Flutter._  
+  
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## **📌 Features**  
 
-A few resources to get you started if this is your first Flutter project:
+✅ **Locate Clinics & Pharmacies** – Search and filter healthcare facilities.  
+✅ **Book & Manage Appointments** – Schedule, view, and cancel appointments.  
+✅ **AI Chatbot Support** – Get automated health guidance.  
+✅ **Medication Search** – Find available medicines in pharmacies.  
+✅ **Offline CSV Data Handling** – Uses preloaded clinic & pharmacy data.  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## **📂 Project Structure**  
+
+```bash
+afya_connect/
+│── lib/
+│   ├── main.dart                 # Entry point
+│   ├── models/                   # Data models (Clinics, Pharmacies, Appointments)
+│   ├── providers/                # State management (Provider)
+│   ├── services/                 # CSV Parsing & API Handling
+│   ├── views/                     # UI Screens
+│   │   ├── home/                  # Home Screen
+│   │   ├── clinics_list.dart      # Clinics List
+│   │   ├── pharmacies_list.dart   # Pharmacies List
+│   │   ├── appointments_screen.dart # Appointment Booking
+│   │   ├── chatbot_screen.dart    # AI Chatbot
+│   ├── widgets/                   # Reusable UI Components
+│
+│── assets/
+│   ├── data/
+│   │   ├── clinics.csv            # Preloaded clinics data
+│   │   ├── pharmacies.csv         # Preloaded pharmacies data
+│
+│── pubspec.yaml                   # Dependencies
+│── README.md                       # Project Documentation
