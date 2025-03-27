@@ -1,6 +1,6 @@
 import 'package:afya_connect/providers/clinic_provider.dart';
 import 'package:afya_connect/providers/pharmacy_provider.dart';
-import 'package:afya_connect/views/home/home_view.dart';
+import 'package:afya_connect/views/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       ),
-      home: const HomeView(),
+      home: const RegisterScreen(),
     );
   }
 }
