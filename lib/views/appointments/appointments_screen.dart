@@ -17,7 +17,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   String? _selectedSpecialist;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
-  List<Appointment> _appointments = [];
+  final List<Appointment> _appointments = [];
 
   @override
   Widget build(BuildContext context) {
